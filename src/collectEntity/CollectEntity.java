@@ -11,6 +11,13 @@ import static kafka.SimpleProperties.ACK_SYNC;
 public class CollectEntity {
 
     public static void main(String[] args) throws IOException {
+        CollectLog gui = new CollectLog();
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                gui.setVisible(true);
+            }
+        });
+        
         SimpleProducer<String> fafProducer = new SimpleProducer<>(SERVERS, ACK_FAF);
         SimpleProducer<String> syncProducer = new SimpleProducer<>(SERVERS, ACK_SYNC);
 
@@ -23,7 +30,7 @@ public class CollectEntity {
             }else{
                 syncProducer.send(TOPIC_ToDigest, key, value);
             }
-            System.out.println("Sent: " + value);
+            gui.log(value);
         }
 
         br.close();

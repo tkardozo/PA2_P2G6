@@ -12,18 +12,20 @@ import java.util.List;
 
 public class ReportWorker implements Callback<String> {
     private MongoCollection collection;
+    private ReportLog gui;
 
-    public ReportWorker(String database, String collection){
+    public ReportWorker(String database, String collection, ReportLog gui){
         MongoClient client = new MongoClient();
         MongoDatabase db = client.getDatabase(database);
         this.collection = db.getCollection(collection);
         this.collection.drop();
+        this.gui = gui;
     }
 
 
     @Override
     public void onSuccess(String key, String value) {
-        System.out.println("Received: " + value);
+        this.gui.log(value);
 
         List<String> msg = new ArrayList<>(Arrays.asList(value.split("[|]")));
 

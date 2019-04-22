@@ -4,7 +4,12 @@ import common.Entry;
 import kafka.Callback;
 
 public class AlarmWorker implements Callback<String> {
+    private AlarmLog gui;
 
+    public AlarmWorker(AlarmLog gui) {
+        this.gui = gui;
+    }
+    
     @Override
     public void onSuccess(String key, String value) {
         Entry entry = new Entry(value);
@@ -18,6 +23,6 @@ public class AlarmWorker implements Callback<String> {
             entry.add("OFF");
         }
 
-        System.out.println(entry.toString());
+        this.gui.log(entry.toString());
     }
 }
