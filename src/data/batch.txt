@@ -39,6 +39,8 @@ echo -ne "."
 echo -ne "."
 ../../kafka_2.12-2.2.0/bin/kafka-topics.sh --delete --bootstrap-server localhost:9092 --topic FromDigestion_2 > /dev/null 2>&1
 echo -ne "."
+../../kafka_2.12-2.2.0/bin/kafka-topics.sh --delete --bootstrap-server localhost:9092 --topic FromDigestion_3 > /dev/null 2>&1
+echo -ne "."
 
 
 echo -ne "\r  Creating topics \033[0K"
@@ -47,6 +49,8 @@ echo -ne "."
 ../../kafka_2.12-2.2.0/bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic FromDigestion_1 >> topics.log 2>&1
 echo -ne "."
 ../../kafka_2.12-2.2.0/bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic FromDigestion_2 >> topics.log 2>&1
+echo -ne "."
+../../kafka_2.12-2.2.0/bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic FromDigestion_3 >> topics.log 2>&1
 echo -ne "."
 
 
@@ -61,4 +65,4 @@ echo_and_sleep 1 "."
 
 echo -ne "\r  Stopping zookeeper server \033[0K"
 ../../kafka_2.12-2.2.0/bin/zookeeper-server-stop.sh > /dev/null 2>&1
-echo_and_sleep 1 "."
+echo_and_sleep 1 ".\n"

@@ -15,10 +15,10 @@ public class SimpleConsumer <T> implements Runnable{
     private Callback<T> callback;
     private boolean closed = false;
 
-    public SimpleConsumer(String servers, String deserializer, Callback<T> callback) {
+    public SimpleConsumer(String servers, String groupId, Callback<T> callback, String deserializer) {
         Properties props = new Properties();
         props.put("bootstrap.servers", servers);
-        props.put("group.id", "digestion");
+        props.put("group.id", groupId);
         props.put("key.deserializer", DESERIALIZER_STRING);
         props.put("value.deserializer", deserializer);
 
@@ -26,8 +26,8 @@ public class SimpleConsumer <T> implements Runnable{
         this.callback = callback;
     }
 
-    public SimpleConsumer(String servers, Callback<T> callback){
-        this(servers, DESERIALIZER_STRING, callback);
+    public SimpleConsumer(String servers, String groupId, Callback<T> callback){
+        this(servers, groupId, callback, DESERIALIZER_STRING);
     }
 
     public void subscribe (String topicName){

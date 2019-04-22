@@ -9,7 +9,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import static kafka.common.TOPIC_TO_Batch;
-import static kafka.common.TOPIC_TO_Alarm_Report;
+import static kafka.common.TOPIC_TO_Alarm;
+import static kafka.common.TOPIC_TO_Report;
 
 public class DigestionWorker implements Callback<String> {
     private SimpleProducer<String> fafProducer;
@@ -25,7 +26,7 @@ public class DigestionWorker implements Callback<String> {
         System.out.println("Received: " + value);
         List<String> msg = new ArrayList<>( Arrays.asList( value.split("[|]") ) );
 
-        if(msg.get(2).equals("01"))
+        if(key.equals("01"))
             msg.add("100");
         msg.add(2, "P-"+msg.get(0));
 
@@ -39,7 +40,12 @@ public class DigestionWorker implements Callback<String> {
         fafProducer.send(TOPIC_TO_Batch, key, result.toString());
         System.out.println("\tSent (via FAF): " + result.toString());
 
-        syncProducer.send(TOPIC_TO_Alarm_Report, key, result.toString());
+        syncProducer.send(TOPIC_TO_Report, key, result.toString());
         System.out.println("\tSent (via SYNC): " + result.toString());
+
+        if(key.equals("01")) {
+            syncProducer.send(TOPIC_TO_Alarm, key, result.toString());
+            System.out.println("\tSent (via SYNC): " + result.toString());
+        }
     }
 }
