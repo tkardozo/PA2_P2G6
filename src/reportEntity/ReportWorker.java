@@ -13,10 +13,10 @@ import java.util.List;
 public class ReportWorker implements Callback<String> {
     private MongoCollection collection;
 
-    public ReportWorker(){
+    public ReportWorker(String database, String collection){
         MongoClient client = new MongoClient();
-        MongoDatabase database = client.getDatabase("PA2_P2G6");
-        this.collection = database.getCollection("logs");
+        MongoDatabase db = client.getDatabase(database);
+        this.collection = db.getCollection(collection);
         this.collection.drop();
     }
 

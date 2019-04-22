@@ -4,24 +4,30 @@ import common.Entry;
 import kafka.SimpleProducer;
 import java.io.*;
 
+import static common.Properties.*;
+import static kafka.SimpleProperties.ACK_FAF;
 import static kafka.SimpleProperties.ACK_SYNC;
-import static common.Properties.SERVERS;
-import static common.Properties.TOPIC_TO_Digest;
 
 public class CollectEntity {
 
     public static void main(String[] args) throws IOException {
-        SimpleProducer<String> producer = new SimpleProducer<>(SERVERS, ACK_SYNC);
+        SimpleProducer<String> fafProducer = new SimpleProducer<>(SERVERS, ACK_FAF);
+        SimpleProducer<String> syncProducer = new SimpleProducer<>(SERVERS, ACK_SYNC);
 
-        BufferedReader br = new BufferedReader(new FileReader(new File("src/data/source.txt")));
+        BufferedReader br = new BufferedReader(new FileReader(new File(COLLECT_File)));
         String value;
         while ((value = br.readLine()) != null){
             String key = new Entry(value).getType();
-            producer.send(TOPIC_TO_Digest, key, value);
+            if(key.equals(MSG_HEARTBEAT)){
+                fafProducer.send(TOPIC_ToDigest, key, value);
+            }else{
+                syncProducer.send(TOPIC_ToDigest, key, value);
+            }
             System.out.println("Sent: " + value);
         }
 
         br.close();
-        producer.close();
+        fafProducer.close();
+        syncProducer.close();
     }
 }
