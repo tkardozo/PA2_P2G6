@@ -1,32 +1,23 @@
 package alarmEntity;
 
+import common.Entry;
 import kafka.Callback;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class AlarmWorker implements Callback<String> {
 
     @Override
     public void onSuccess(String key, String value) {
-        List<String> msg = new ArrayList<>( Arrays.asList( value.split("[|]") ) );
+        Entry entry = new Entry(value);
 
-        Integer speed = Integer.parseInt(msg.get(4));
-        Integer maxSpeed = Integer.parseInt(msg.get(6));
+        Integer speed = Integer.parseInt(entry.get(4));
+        Integer maxSpeed = Integer.parseInt(entry.get(6));
 
         if(speed > maxSpeed){
-            msg.add("ON");
+            entry.add("ON");
         }else{
-            msg.add("OFF");
+            entry.add("OFF");
         }
 
-        StringBuilder result = new StringBuilder();
-        msg.forEach(part->{
-            if(result.length() > 0)
-                result.append("|");
-            result.append(part);
-        });
-        System.out.println(result.toString());
+        System.out.println(entry.toString());
     }
 }

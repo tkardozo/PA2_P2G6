@@ -2,8 +2,8 @@ package digestionEntity;
 
 import kafka.SimpleConsumer;
 
-import static kafka.common.SERVERS;
-import static kafka.common.TOPIC_TO_Digest;
+import static common.Properties.SERVERS;
+import static common.Properties.TOPIC_TO_Digest;
 
 public class DigestionEntity {
     public static void main(String[] args) {

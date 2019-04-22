@@ -1,16 +1,13 @@
 package digestionEntity;
 
+import common.Entry;
 import kafka.Callback;
 import kafka.SimpleProducer;
 import kafka.SimpleProperties;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import static kafka.common.TOPIC_TO_Batch;
-import static kafka.common.TOPIC_TO_Alarm;
-import static kafka.common.TOPIC_TO_Report;
+import static common.Properties.TOPIC_TO_Batch;
+import static common.Properties.TOPIC_TO_Alarm;
+import static common.Properties.TOPIC_TO_Report;
 
 public class DigestionWorker implements Callback<String> {
     private SimpleProducer<String> fafProducer;
@@ -24,28 +21,23 @@ public class DigestionWorker implements Callback<String> {
     @Override
     public void onSuccess(String key, String value) {
         System.out.println("Received: " + value);
-        List<String> msg = new ArrayList<>( Arrays.asList( value.split("[|]") ) );
+        Entry entry = new Entry(value);
 
         if(key.equals("01"))
-            msg.add("100");
-        msg.add(2, "P-"+msg.get(0));
+            entry.add("100");
 
-        StringBuilder result = new StringBuilder();
-        msg.forEach(part->{
-            if(result.length() > 0)
-                result.append("|");
-            result.append(part);
-        });
+        entry.register();
+        String result = entry.toString();
 
-        fafProducer.send(TOPIC_TO_Batch, key, result.toString());
-        System.out.println("\tSent (via FAF): " + result.toString());
+        fafProducer.send(TOPIC_TO_Batch, key, result);
+        System.out.println("\tSent (via FAF): " + result);
 
-        syncProducer.send(TOPIC_TO_Report, key, result.toString());
-        System.out.println("\tSent (via SYNC): " + result.toString());
+        syncProducer.send(TOPIC_TO_Report, key, result);
+        System.out.println("\tSent (via SYNC): " + result);
 
         if(key.equals("01")) {
-            syncProducer.send(TOPIC_TO_Alarm, key, result.toString());
-            System.out.println("\tSent (via SYNC): " + result.toString());
+            syncProducer.send(TOPIC_TO_Alarm, key, result);
+            System.out.println("\tSent (via SYNC): " + result);
         }
     }
 }
