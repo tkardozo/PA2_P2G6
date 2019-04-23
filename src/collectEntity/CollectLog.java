@@ -1,21 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package collectEntity;
 
 import javax.swing.text.DefaultCaret;
 
 /**
+ * GUI for the CollectEntity
  *
- * @author Daniel
+ * @see CollectEntity
+ * @author P2G6
  */
 public class CollectLog extends javax.swing.JFrame {
-
-    /**
-     * Creates new form Collect
-     */
     private int msgCounter;
 
     public CollectLog() {
@@ -24,7 +17,6 @@ public class CollectLog extends javax.swing.JFrame {
 
         DefaultCaret caret = (DefaultCaret) collectLog.getCaret();
         caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-
     }
 
     /**
@@ -89,6 +81,11 @@ public class CollectLog extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Updates the logs and the message counter.
+     *
+     * @param data The sent message
+     */
     public void log(String data) {
         this.msgCounter++;
         this.msgSCount.setText(msgCounter + "");

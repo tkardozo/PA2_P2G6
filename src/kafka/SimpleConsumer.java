@@ -10,11 +10,27 @@ import java.util.regex.Pattern;
 
 import static kafka.SimpleProperties.*;
 
-public class SimpleConsumer <T> implements Runnable{
+/**
+ * Simplified consumer for KAFKA consumer, with callback onReceive
+ *
+ * @param <T>
+ * @see Callback
+ * @author P2G6
+ */
+public class SimpleConsumer<T> implements Runnable {
+
     private Consumer<String, T> consumer;
     private Callback<T> callback;
     private boolean closed = false;
 
+    /**
+     * Registers the desired callback and creates the inner consumer
+     *
+     * @param servers The KAFKA server endpoints
+     * @param groupId The KAFKA consumer group ID
+     * @param callback The desired callback
+     * @param deserializer
+     */
     public SimpleConsumer(String servers, String groupId, Callback<T> callback, String deserializer) {
         Properties props = new Properties();
         props.put("bootstrap.servers", servers);
@@ -26,27 +42,45 @@ public class SimpleConsumer <T> implements Runnable{
         this.callback = callback;
     }
 
-    public SimpleConsumer(String servers, String groupId, Callback<T> callback){
+    /**
+     * Registers the desired callback and creates the default inner consumer
+     *
+     * @param servers The KAFKA server endpoints
+     * @param groupId The KAFKA consumer group ID
+     * @param callback The desired callback
+     */
+    public SimpleConsumer(String servers, String groupId, Callback<T> callback) {
         this(servers, groupId, callback, DESERIALIZER_STRING);
     }
 
-    public void subscribe (String topicName){
+    /**
+     * Subscriber for topics
+     *
+     * @param topicName
+     */
+    public void subscribe(String topicName) {
         consumer.subscribe(Pattern.compile(topicName));
     }
 
+    /**
+     * The main execution of the consumer
+     */
     @Override
     public void run() {
-        while(!closed){
+        while (!closed) {
             ConsumerRecords<String, T> records = consumer.poll(100);
-            for( ConsumerRecord<String, T> record : records){
-                this.callback.onSuccess(record.key(), record.value());
+            for (ConsumerRecord<String, T> record : records) {
+                this.callback.onReceive(record.key(), record.value());
             }
         }
         this.consumer.close();
 
     }
 
-    public void close(){
+    /**
+     * Closing the receiver
+     */
+    public void close() {
         this.closed = true;
     }
 

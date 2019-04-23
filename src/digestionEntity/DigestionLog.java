@@ -1,21 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package digestionEntity;
 
 import javax.swing.text.DefaultCaret;
 
 /**
+ * GUI for the DigestionEntity
  *
- * @author Daniel
+ * @see DigestionEntity
+ * @author P2G6
  */
 public class DigestionLog extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Digestion
-     */
     private int msgReceivedCounter;
     private int msgSentCounter;
 
@@ -105,16 +99,27 @@ public class DigestionLog extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Updates the logs and the message counter.
+     *
+     * @param data The sent message
+     */
     public void log(String data) {
         this.log(data, true);
     }
-    
+
+    /**
+     * Updates the logs and the messages counter.
+     *
+     * @param data The received/sent message
+     * @param sent
+     */
     public void log(String data, boolean sent) {
-        if(sent){
+        if (sent) {
             this.msgSentCounter++;
             msgSCount.setText(msgSentCounter + "");
             digestionLog.append("  S: ");
-        }else{
+        } else {
             this.msgReceivedCounter++;
             msgRCount.setText(msgReceivedCounter + "");
             digestionLog.append("R: ");

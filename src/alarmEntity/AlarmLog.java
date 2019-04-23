@@ -2,11 +2,14 @@ package alarmEntity;
 
 import javax.swing.text.DefaultCaret;
 
+/**
+ * GUI for the AlarmEntity
+ *
+ * @see AlarmEntity
+ * @author P2G6
+ */
 public class AlarmLog extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Alarm
-     */
     private int msgCounter;
 
     public AlarmLog() {
@@ -78,6 +81,11 @@ public class AlarmLog extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Updates the logs and the message counter.
+     *
+     * @param data The received message
+     */
     public void log(String data) {
         this.msgCounter++;
         msgRCount.setText(this.msgCounter + "");

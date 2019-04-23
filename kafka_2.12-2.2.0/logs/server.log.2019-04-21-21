@@ -1,8 +1,0 @@
-[2019-04-21 21:23:41,274] INFO [GroupMetadataManager brokerId=0] Removed 0 expired offsets in 1 milliseconds. (kafka.coordinator.group.GroupMetadataManager)
-[2019-04-21 21:28:41,190] INFO [GroupCoordinator 0]: Preparing to rebalance group digestion in state PreparingRebalance with old generation 4 (__consumer_offsets-12) (reason: Adding new member consumer-1-57dd1689-af22-409f-8314-7519e8c6178e) (kafka.coordinator.group.GroupCoordinator)
-[2019-04-21 21:28:47,504] INFO [GroupCoordinator 0]: Member consumer-1-879179ea-fb2f-441d-8d85-67220590ac9e in group digestion has failed, removing it from the group (kafka.coordinator.group.GroupCoordinator)
-[2019-04-21 21:28:47,504] INFO [GroupCoordinator 0]: Stabilized group digestion generation 5 (__consumer_offsets-12) (kafka.coordinator.group.GroupCoordinator)
-[2019-04-21 21:28:47,507] INFO [GroupCoordinator 0]: Assignment received from leader for group digestion for generation 5 (kafka.coordinator.group.GroupCoordinator)
-[2019-04-21 21:33:41,274] INFO [GroupMetadataManager brokerId=0] Removed 0 expired offsets in 1 milliseconds. (kafka.coordinator.group.GroupMetadataManager)
-[2019-04-21 21:43:41,274] INFO [GroupMetadataManager brokerId=0] Removed 0 expired offsets in 0 milliseconds. (kafka.coordinator.group.GroupMetadataManager)
-[2019-04-21 21:53:41,274] INFO [GroupMetadataManager brokerId=0] Removed 0 expired offsets in 1 milliseconds. (kafka.coordinator.group.GroupMetadataManager)

@@ -8,9 +8,24 @@ import java.util.Properties;
 
 import static kafka.SimpleProperties.SERIALIZER_STRING;
 
-public class SimpleProducer <T>{
+/**
+ * Simplified producer for KAFKA producer
+ *
+ * @param <T>
+ * @see Callback
+ * @author P2G6
+ */
+public class SimpleProducer<T> {
+
     private Producer<String, T> producer;
 
+    /**
+     * Registers the desired callback and creates the inner producer
+     *
+     * @param servers The KAFKA server endpoints
+     * @param serializer
+     * @param ackType The desired acknowledge type for this producer
+     */
     public SimpleProducer(String servers, String serializer, String ackType) {
         Properties props = new Properties();
         props.put("bootstrap.servers", servers);
@@ -21,16 +36,32 @@ public class SimpleProducer <T>{
         this.producer = new KafkaProducer<>(props);
     }
 
-    public SimpleProducer(String servers, String ackType){
+    /**
+     * Registers the desired callback and creates the default inner producer
+     *
+     * @param servers The KAFKA server endpoints
+     * @param ackType The desired acknowledge type for this producer
+     */
+    public SimpleProducer(String servers, String ackType) {
         this(servers, SERIALIZER_STRING, ackType);
     }
 
-    public void send(String topicName, String key, T msg){
+    /**
+     * Send a message to the desired topic
+     *
+     * @param topicName
+     * @param key
+     * @param msg
+     */
+    public void send(String topicName, String key, T msg) {
         ProducerRecord<String, T> record = new ProducerRecord<>(topicName, key, msg);
         producer.send(record);
     }
 
-    public void close(){
+    /**
+     * Closing the producer
+     */
+    public void close() {
         this.producer.close();
     }
 

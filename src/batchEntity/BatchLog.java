@@ -1,21 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package batchEntity;
 
 import javax.swing.text.DefaultCaret;
 
 /**
+ * GUI for the BatchEntity
  *
- * @author Daniel
+ * @see BatchEntity
+ * @author P2G6
  */
 public class BatchLog extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Batch
-     */
     private int msgCounter;
 
     public BatchLog() {
@@ -89,12 +83,17 @@ public class BatchLog extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Updates the logs and the message counter.
+     *
+     * @param data The received message
+     */
     public void log(String data) {
         this.msgCounter++;
         msgRCount.setText(this.msgCounter + "");
         batchLog.append("R: " + data + "\n");
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private static javax.swing.JTextArea batchLog;
     private javax.swing.JLabel jLabel1;
