@@ -23,17 +23,13 @@ echo_and_sleep 5 "."
 
 echo -ne "\r  Starting kafka server 1 \033[0K"
 ./bin/kafka-server-start.sh ./config/server_1.properties >> kafka.log &
-echo_and_sleep 5 "."
-
-echo -ne "\r  Starting kafka server 2 \033[0K"
-./bin/kafka-server-start.sh ./config/server_2.properties >> kafka.log &
-echo_and_sleep 5 "."
+echo_and_sleep 8 "."
 
 
 echo -ne "\r  Creating topics \033[0K"
-./bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 2 --partitions 1 --topic ToDigestion > topics.log
+./bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 2 --partitions 6 --topic ToDigestion > topics.log
 echo -ne "."
-./bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 2 --partitions 1 --topic FromDigestion_1 >> topics.log
+./bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 2 --partitions 6 --topic FromDigestion_1 >> topics.log
 echo -ne "."
 ./bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 2 --partitions 1 --topic FromDigestion_2 >> topics.log
 echo -ne "."

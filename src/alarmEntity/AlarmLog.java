@@ -45,7 +45,7 @@ public class AlarmLog extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("Alarm");
 
-        jLabel2.setText("Messages received:");
+        jLabel2.setText("Alerts Counter");
 
         msgRCount.setEditable(false);
 
